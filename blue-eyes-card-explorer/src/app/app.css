@@ -1,0 +1,35 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 24px;
+  background: linear-gradient(90deg, #14142b, #2b0a3d);
+  border-bottom: 2px solid #d4af37;
+}
+
+.topbar h1 {
+  font-size: 1.2rem;
+  margin: 0 24px 0 0;
+  color: #d4af37;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.topbar a {
+  color: #eee;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.topbar a.active,
+.topbar a:hover {
+  background: #d4af37;
+  color: #111;
+}
+
+main {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}

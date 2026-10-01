@@ -1,0 +1,8 @@
+/* Tema "duelo de alto riesgo": fondo oscuro, detalles dorados (Yu-Gi-Oh! + Kakegurui) */
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: radial-gradient(circle at top, #1a1a40 0%, #0b0b1e 70%);
+  color: #eee;
+  min-height: 100vh;
+}
