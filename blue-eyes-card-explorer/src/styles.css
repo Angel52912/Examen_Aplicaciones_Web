@@ -1,8 +1,62 @@
-/* Tema "duelo de alto riesgo": fondo oscuro, detalles dorados (Yu-Gi-Oh! + Kakegurui) */
-body {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  background: radial-gradient(circle at top, #1a1a40 0%, #0b0b1e 70%);
-  color: #eee;
-  min-height: 100vh;
+:root {
+  color-scheme: dark;
+  /* Paleta: nigromante + oro ceremonial (Yu-Gi-Oh!) con la opulencia
+     oscura y el dramatismo de las apuestas de Kakegurui. */
+  --ink: #07050b;
+  --panel: #130f1c;
+  --panel-raised: #1c1526;
+  --line: #3c2f4d;
+  --line-soft: #2a2136;
+  --gold: #c9a24b;
+  --gold-bright: #f3d98a;
+  --gold-deep: #7a5a1f;
+  --blood: #8e1b2e;
+  --rose: #d94f68;
+  --ice: #9fdbe8;
+  --violet: #8a6cff;
+  --text: #f1e9d8;
+  --muted: #a99bb6;
+  --danger: #ff9a8b;
 }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(ellipse at 50% -12%, #2a1230 0, transparent 56%),
+    radial-gradient(ellipse at 12% 8%, rgb(142 27 46 / 20%) 0, transparent 44%),
+    radial-gradient(ellipse at 88% 4%, rgb(138 108 255 / 14%) 0, transparent 42%),
+    repeating-linear-gradient(135deg, transparent 0 44px, rgb(201 162 75 / 3%) 45px 46px),
+    repeating-linear-gradient(-135deg, transparent 0 44px, rgb(159 219 232 / 2%) 45px 46px);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, .brand-copy strong, .eyebrow, .result-count, .stats small,
+th, .inspect, .back-link, .status, .search-field, label, select, button,
+.main-nav a, .brand-copy small {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: .04em;
+}
+
+a { color: var(--gold-bright); }
+
+button, input, select { font: inherit; }
+button, a, select { -webkit-tap-highlight-color: transparent; }
+::selection { color: var(--ink); background: var(--gold-bright); }
+
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #0b0810; }
+::-webkit-scrollbar-thumb {
+  border: 2px solid #0b0810;
+  background: linear-gradient(180deg, var(--gold-deep), #2b1d0b);
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); }

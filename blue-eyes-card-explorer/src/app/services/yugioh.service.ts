@@ -1,18 +1,37 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError, forkJoin } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse, Card } from '../models/card.model';
+
+// Filtros que puede aplicar el buscador de la página de inicio.
+export interface CardQuery {
+  name?: string;
+  types?: string[];
+  attributes?: string[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class YugiohService {
   private http = inject(HttpClient);
   private baseUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
 
-  // Búsqueda por nombre parcial usando el parámetro `fname`.
-  // Si la API responde 400 (sin resultados), devolvemos [] en lugar de fallar.
-  searchCards(name: string): Observable<Card[]> {
-    return this.get(`?fname=${encodeURIComponent(name)}`);
+  // Catálogo inicial: primeras cartas ordenadas por nombre.
+  // Así la página de inicio muestra cartas sin necesidad de buscar ni filtrar.
+  getCatalog(limit = 60, offset = 0): Observable<Card[]> {
+    return this.get(`?sort=name&num=${limit}&offset=${offset}`);
+  }
+
+  // Búsqueda combinada: nombre (fname) + categorías (type) + atributo (attribute).
+  // Todos los parámetros se aplican a la vez, de modo que escribir en el
+  // buscador o elegir una categoría refina la lista que ya se ve en pantalla.
+  searchCards(query: CardQuery, limit = 60, offset = 0): Observable<Card[]> {
+    const params: string[] = [`num=${limit}`, `offset=${offset}`];
+    const name = query.name?.trim();
+    if (name) params.push(`fname=${encodeURIComponent(name)}`);
+    if (query.types?.length) params.push(`type=${encodeURIComponent(query.types.join(','))}`);
+    if (query.attributes?.length) params.push(`attribute=${encodeURIComponent(query.attributes.join(','))}`);
+    return this.get(`?${params.join('&')}`);
   }
 
   // Cartas del arquetipo Blue-Eyes usando el parámetro `archetype`.
@@ -23,18 +42,6 @@ export class YugiohService {
   // Una carta por su id numérico.
   getCardById(id: number): Observable<Card[]> {
     return this.get(`?id=${id}`);
-  }
-
-  // Tarjetas de uno o varios tipos exactos (p. ej. 'Spell Card', 'Effect Monster').
-  // Se lanzan en paralelo con forkJoin y se unen en una sola lista sin duplicados.
-  getCardsByTypes(types: string[]): Observable<Card[]> {
-    if (types.length === 0) return of([]);
-    return forkJoin(types.map((t) => this.get(`?type=${encodeURIComponent(t)}`))).pipe(
-      map((results) => {
-        const seen = new Set<number>();
-        return results.flat().filter((c) => (seen.has(c.id) ? false : (seen.add(c.id), true)));
-      }),
-    );
   }
 
   // GET genérico: extrae `data` y trata el 400 (sin resultados) como lista vacía.

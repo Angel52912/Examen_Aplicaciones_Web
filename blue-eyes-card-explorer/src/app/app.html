@@ -1,8 +1,16 @@
-<nav class="topbar">
-  <h1>Blue-Eyes Card Explorer</h1>
-  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Buscador</a>
-  <a routerLink="/blue-eyes" routerLinkActive="active">Blue-Eyes Collection</a>
-</nav>
-<main>
+<header class="topbar">
+  <a class="brand" routerLink="/" aria-label="Blue-Eyes Card Explorer, inicio">
+    <img class="brand-logo" src="logo.jpg" alt="Mago Oscuro" />
+    <span class="brand-copy">
+      <strong>Blue-Eyes Card Explorer</strong>
+      <small>Card archive</small>
+    </span>
+  </a>
+  <nav class="main-nav" aria-label="Navegación principal">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Buscador</a>
+    <a routerLink="/blue-eyes" routerLinkActive="active">Blue-Eyes Collection</a>
+  </nav>
+</header>
+<main class="page-shell">
   <router-outlet />
 </main>

@@ -1,0 +1,9 @@
+# Documentación, prompts y explicaciones
+# (enunciados, guías, READMEs y notas que no forman parte del código)
+*.md
+*.markdown
+*.mdx
+*.txt
+*.rst
+*.adoc
+*.pdf
